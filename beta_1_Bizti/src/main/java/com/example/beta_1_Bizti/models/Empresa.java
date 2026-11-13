@@ -1,18 +1,15 @@
 package com.example.beta_1_Bizti.models;
 
-import java.util.List;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+// Entidad JPA: solo mapea la tabla. La API usa DTOs (paquete dto), nunca esta clase.
 @Entity
 @Table(name = "empresas")
 public class Empresa {
@@ -24,13 +21,13 @@ public class Empresa {
     @Column(nullable = false, length = 50)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nit;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String sector;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, length = 100)
     private String contacto;
 
     @Column(nullable = false, unique = true, length = 150)
@@ -40,14 +37,10 @@ public class Empresa {
     private String telefono;
 
     @Column(nullable = false)
-    private Boolean activa = true;
+    private Boolean activa;
 
-    // Constructor vacío requerido por JPA
     public Empresa() {
-
     }
-
-    // Getters y Setters
 
     public UUID getId() {
         return id;
@@ -112,10 +105,4 @@ public class Empresa {
     public void setActiva(Boolean activa) {
         this.activa = activa;
     }
-
-    @OneToMany (mappedBy = "empresa")
-    @JsonManagedReference ("reto_empresa")
-    private List <Reto> retos;
-
 }
-
